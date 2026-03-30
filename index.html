@@ -4,118 +4,24 @@
 <!-- 
 Name: Christiane Nogueira Mendes
 ID: 1242980
-Project: JavaScript
-Submission Date: April 10, 2025 
+Project: JavaScript - Travel Booking Website
+Submission Date: April 10, 2025
+
+STRUCTURE:
+- index.html (HTML structure)
+- styles/style.css (Styles)
+- js/script.js (JavaScript logic)
+- images/ (Images folder)
 -->
 
 <head>
     <meta charset="UTF-8">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Outfit:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./styles/style.css">
     <title>Explore Travel Deals</title>
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f4f4f4;
-        }
-
-        header {
-            text-align: center;
-            background-image: url('./images/flight.jpg');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            padding: 10px;
-            border-radius: 8px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #logo {
-            width: 250px;
-            height: auto;
-            padding: auto;
-            border-radius: 10%;
-        }
-
-        div.destination,
-        #cart,
-        #reviewList {
-            border: 1px solid #ddd;
-            padding: 10px;
-            margin: 10px;
-            display: inline-block;
-            width: 300px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(133, 15, 15, 0.2);
-        }
-
-        div.destination img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 7px;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
-            margin-left: 20px;
-        }
-
-        h2 {
-            color: #070565;
-            margin: 20px 0;
-        }
-
-        h3 {
-            color: #960728;
-            margin: 10px 0;
-            text-align: bold;
-            border-radius: 10%;
-        }
-
-        p {
-            color: #333;
-            margin: 5px 0;
-        }
-
-        footer {
-            background-color: #ebd4ac;
-            padding: 20px;
-            margin-top: 20px;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        select {
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-
-        .addCart,
-        .removeCart,
-        #submit {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-    </style>
 </head>
 
 <body>
@@ -124,325 +30,119 @@ Submission Date: April 10, 2025
         <h1>Your Adventure Starts Here</h1>
     </header>
 
-    <h2>Unforgettable Trips, Unbeatable Prices</h2>
-    <p>Get ready for your next adventure at a price that suits you.</p>
-    <br>
+    <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
 
-    <h3>Popular Destinations</h3>
-    <div id="destination"></div><br>
+    <main class="page-shell">
+        <section class="hero">
+            <h2>Unforgettable Trips, Unbeatable Prices</h2>
+            <p>Get ready for your next adventure at a price that suits you.</p>
+        </section>
 
-    <footer>
-        <div id="time"></div>
-        <h2>Shopping Cart</h2>
-        <div id="cart"></div>
-        <div>
-            <select id="currencySelector" onchange="updateCurrency()">
-                <option value="CAD">CAD</option>
-                <option value="USD">USD</option>
-                <option value="EUR">EUR</option>
-            </select>
-        </div>
-        <h3>Subtotal: <span id="subtotal">0.00</span></h3>
-        <h3>Tax (13%): <span id="tax">0.00</span></h3>
-        <h3>Booking Fees: <span id="bookingFees">20.00</span></h3>
-        <h2>Total: <span id="total">0.00</span></h2>
-        <hr>
-
-        <div>
-            <h2>Feedback:</h2>
-            <form id="reviewForm">
-                Name:<input type="text" name="userName" id="userName"><br><br>
-
-                Feedback:<textarea name="reviews" id="reviews" cols="40" rows="5"></textarea><br>
-
-                Star (1 to 5):<select id="starRating">
-                    <option value="1">&#127775;</option>
-                    <option value="2">&#127775;&#127775;</option>
-                    <option value="3">&#127775;&#127775;&#127775;</option>
-                    <option value="4">&#127775;&#127775;&#127775;&#127775;</option>
-                    <option value="5">&#127775;&#127775;&#127775;&#127775;&#127775;</option>
+        <section class="destinations-section">
+            <h3>Popular Destinations</h3>
+            <div class="destinations-controls">
+                <input id="destinationSearch" type="text" placeholder="Search destination..."
+                    aria-label="Search destination by name or description">
+                <select id="priceFilter" aria-label="Filter by maximum price">
+                    <option value="all">All prices</option>
+                    <option value="500">Up to 500</option>
+                    <option value="700">Up to 700</option>
+                    <option value="900">Up to 900</option>
                 </select>
-                <br>
-                <input id="submit" type="submit" value="Submit"><br>
-            </form>
-        </div>
-        <br>
+                <select id="sortBy" aria-label="Sort destinations">
+                    <option value="name-asc">Sort: Name A-Z</option>
+                    <option value="price-asc">Sort: Lowest price</option>
+                    <option value="price-desc">Sort: Highest price</option>
+                </select>
 
-        <h2>Travel Experience Reviews:</h2>
-        <div id="reviewList">Travel Experience Reviews</div>
+                <div class="control-inline">
+                    <label for="currencySelector">Currency:</label>
+                    <select id="currencySelector" onchange="updateCurrency()" aria-label="Select currency">
+                        <option value="CAD">CAD</option>
+                        <option value="USD">USD</option>
+                        <option value="EUR">EUR</option>
+                    </select>
+                </div>
+            </div>
+            <div id="destination"></div>
+        </section>
 
-    </footer>
+        <footer>
+            <div id="time"></div>
 
-    <script>
+            <section class="cart-section">
+                <h2>Shopping Cart</h2>
+                <div id="cart" class="cart-items"></div>
 
-        // 1. Create Constructors for Objects: Product Object: Store item details(ID, name, price, quanty, category, etc.).
-        function Product(id, name, price, quantity, description, image) {
-            this.id = id;
-            this.name = name;
-            this.price = price;
-            this.quantity = quantity;
-            this.description = description;
-            this.image = image;
-        }
+                <div class="totals-box" role="status" aria-live="polite" aria-atomic="true">
+                    <div class="total-row">
+                        <span>Subtotal:</span>
+                        <span id="subtotal">0.00</span>
+                    </div>
+                    <div class="total-row">
+                        <span>Tax (13%):</span>
+                        <span id="tax">0.00</span>
+                    </div>
+                    <div class="total-row">
+                        <span>Booking Fees:</span>
+                        <span id="bookingFees">20.00</span>
+                    </div>
+                    <div class="total-row total-final">
+                        <span>Total:</span>
+                        <span id="total" aria-label="Grand total">0.00</span>
+                    </div>
+                </div>
+            </section>
 
-        // Cart Item Object: Store item details in the cart (ID, price, quanty, etc.). 
-        function Cart(id, price, quantity) {
-            this.id = id;
-            this.price = price;
-            this.quantity = quantity;
-        }
+            <section class="community-section">
+                <section class="feedback-section">
+                    <div class="section-heading">
+                        <h2>Share Your Feedback</h2>
+                        <p>Tell us how your trip experience was.</p>
+                    </div>
 
-        // Review Object: Store review and rating information for products (text review, star rating)
-        function Review(productId, userName, reviewText, starRating) {
-            this.productId = productId;
-            this.userName = userName;
-            this.reviewText = reviewText;
-            this.starRating = starRating;
-        }
+                    <form id="reviewForm">
+                        <div class="form-group">
+                            <label for="userName">Name</label>
+                            <input type="text" name="userName" id="userName" placeholder="Enter your name" required>
+                        </div>
 
-        // 2. Create Global Variables: Empty arrays for product objects and cart item objects. 
-        var products = [];
-        var cart = [];
-        var reviews = [];
+                        <div class="form-group">
+                            <label for="reviews">Feedback</label>
+                            <textarea name="reviews" id="reviews" rows="5"
+                                placeholder="Tell us about your experience..." required></textarea>
+                        </div>
 
-        // 3. Initialize Function: Function that runs on page load, displays current time, and populates product and cart arrays. 
-        function initialize() {
+                        <div class="form-group">
+                            <label for="starRating">Star (1 to 5)</label>
+                            <select id="starRating" aria-label="Select star rating">
+                                <option value="1">⭐ Poor</option>
+                                <option value="2">⭐⭐ Fair</option>
+                                <option value="3">⭐⭐⭐ Good</option>
+                                <option value="4">⭐⭐⭐⭐ Very Good</option>
+                                <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+                            </select>
+                        </div>
 
-            // Display current time
-            var date = new Date();
-            console.log(date); // Log the current date and time to the console
+                        <input id="submit" type="submit" value="Submit Feedback">
+                    </form>
+                </section>
 
-            // Populate products array with product objects
-            products.push(new Product(1, "Amsterdam", 450.00, 1, "The Venice of the North", "./images/amsterdam.jpg"));
-            products.push(new Product(2, "Bangkok", 550.00, 1, "A City of Contrasts", "./images/bangkok.jpg"));
-            products.push(new Product(3, "Dubai", 800.00, 1, "A Modern Marvel in the Desert", "./images/dubai.jpg"));
-            products.push(new Product(4, "London", 700.00, 1, "A City Rich in History", "./images/london.jpg"));
-            products.push(new Product(5, "New York", 650.00, 1, "The City That Never Sleeps", "./images/nyc.jpg"));
-            products.push(new Product(6, "Paris", 750.00, 1, "Experience the City of Lights", "./images/paris.jpg"));
-            products.push(new Product(7, "Rio de Janeiro", 400.00, 1, "The Marvelous City", "./images/rio.jpg"));
-            products.push(new Product(8, "Rome", 600.00, 1, "The Eternal City", "./images/rome.jpg"));
-            products.push(new Product(9, "Sidney", 900.00, 1, "A Harbour City with Iconic Landmarks", "./images/sidney.jpg"));
-            products.push(new Product(10, "Toronto", 500.00, 1, "A Multicultural Metropolis", "./images/toronto.jpg"));
+                <section class="reviews-section">
+                    <div class="section-heading">
+                        <h2>Travel Experience Reviews</h2>
+                        <p>What travelers are saying about the trips.</p>
+                    </div>
 
-            // Display the products in the console for verification (in the future, you can display them on the page)
-            console.log(products);
+                    <ul id="reviewList" class="reviews-container">
+                        <li class="no-reviews">No reviews yet. Be the first to share!</li>
+                    </ul>
+                </section>
+            </section>
+        </footer>
+    </main>
 
-        }
-
-        // Run initialize when the page is loaded
-        document.addEventListener("DOMContentLoaded", initialize);
-
-        // 7. Currency conversion rates (relative to CAD)
-        const conversionRates = {
-            CAD: 1,
-            USD: 0.74,  // Example rate (1 CAD = 0.74 USD)
-            EUR: 0.66   // Example rate (1 CAD = 0.66 EUR)
-        };
-        var currentCurrency = 'CAD';
-
-        // Function to update the currency and refresh prices
-        function updateCurrency() {
-            const selectedCurrency = document.getElementById("currencySelector").value;
-            currentCurrency = selectedCurrency;
-
-            // Update the displayed product prices
-            displayProducts();
-
-            // Update the cart prices
-            displayCart();
-            calculateTotal();
-        }
-
-        // Function to convert price based on selected currency
-        function convertPrice(price) {
-            return price * conversionRates[currentCurrency];
-        }
-
-        // 4. Display Products: Function to display the product catalog dynamically (name, price, quantity, image, category, etc.). 
-        function displayProducts() {
-
-            // Get the div element to display products
-            var productDestination = document.getElementById("destination");
-            productDestination.innerHTML = "";
-
-            for (var i = 0; i < products.length; i++) {
-                var product = products[i];
-
-                // Convert price to the selected currency
-                var convertedPrice = convertPrice(product.price);
-
-                // Create a new div element for the product
-                var productDiv = document.createElement("div");
-                productDiv.classList.add("destination");
-
-                // Set the inner HTML of the product div with product details
-                productDiv.innerHTML =
-                    '<img src="' + product.image + '" alt="' + product.name + '" >' +
-                    '<h3>' + product.name + '</h3>' +
-                    '<p>' + product.description + '</p>' +
-                    '<p>Price: CA$ ' + product.price.toFixed(2) + ' per person</p><br>' +
-                    '<button onclick="addToCart( ' + product.id + ')" class="addCart" data-price="' + product.price + '">Book Now</button>';
-
-                productDestination.appendChild(productDiv);
-            }
-        }
-        document.addEventListener("DOMContentLoaded", displayProducts);
-
-        // 5. Display Cart Itens: Function to display the cart's contents (ID, price, quan ty, subtotal).
-        function displayCart() {
-            const cartContainer = document.getElementById("cart");
-            cartContainer.innerHTML = "";
-
-            for (var i = 0; i < cart.length; i++) {
-                const item = cart[i];
-
-                // Convert price and subtotal to the selected currency
-                var convertedPrice = convertPrice(item.price);
-                var convertedSubtotal = convertPrice(item.subtotal);
-
-                // Creates a new element for each item in the cart
-                const itemDiv = document.createElement("div");
-                itemDiv.classList.add("cart-item");
-
-                // Fills the item's HTML
-                itemDiv.innerHTML =
-                    // "<p>Product ID: " + item.id + "</p>" +
-                    "<br><p><b> " + item.name + "</b></p>" +
-                    "<p><b>CA$ </b>" + item.price.toFixed(2) + "</p>" +
-                    "<p><b>Quantity: </b> " + item.quantity + "</p>" +
-                    "<p><b>Subtotal: CA$ </b>" + item.subtotal.toFixed(2) + "</p>" +
-                    '<button onclick="RemoveFromCart( ' + item.id + ')" class="removeCart">Remove</button><br><br>';
-
-                // Adds the item to the cart container (which is now the footer)
-                cartContainer.appendChild(itemDiv);
-            };
-            calculateTotal();
-        }
-
-        // 8. Add items to the cart by specifying product ID and quan ty. Ensure quan ty limits are respected. 
-        function addToCart(id) {
-
-            var quantityToAdd = 1;
-
-            // Search if the item is already in the cart
-            for (var i = 0; i < cart.length; i++) {
-                if (cart[i].id === id) {
-                    cart[i].quantity = cart[i].quantity + 1;
-                    cart[i].subtotal = cart[i].price * cart[i].quantity;
-                    displayCart();
-                    return; // Item found and updated, stop here
-                }
-            }
-
-            // If not found in the cart, search in the product options
-            for (var i = 0; i < products.length; i++) {
-                if (products[i].id === id) {
-                    var newItem = {
-                        id: products[i].id,
-                        name: products[i].name,
-                        price: products[i].price,
-                        quantity: quantityToAdd,
-                        subtotal: products[i].price * quantityToAdd
-                    };
-
-                    cart.push(newItem);
-                }
-            }
-            displayCart(); // Update the cart
-        }
-
-        // 9. Remove items from the cart
-        function RemoveFromCart(id) {
-            for (var i = 0; i < cart.length; i++) {
-                if (cart[i].id === id) {
-                    cart[i].quantity = cart[i].quantity - 1;
-
-                    if (cart[i].quantity <= 0) {
-                        cart.splice(i, 1); // Completely remove the item
-                    } else {
-                        cart[i].subtotal = cart[i].price * cart[i].quantity;
-                    }
-                }
-            }
-
-            displayCart(); // Update the cart display
-        }
-
-        // 6. Calculate Cart Totals - Function to calculate and display order totals: subtotal, shipping cost, tax, and grand total.
-        function calculateTotal() {
-            var subtotal = 0;
-            var bookingFees = 20;
-            var taxRate = 0.13;
-            var total;
-
-            // Calculate the subtotal with the loop
-            for (var i = 0; i < cart.length; i++) {
-                subtotal = subtotal + convertPrice(cart[i].price) * cart[i].quantity;
-            }
-
-            // Calculate the tax rate
-            var tax = subtotal * taxRate;
-
-            // Calculate the total (with the service fee)
-            total = subtotal + tax + bookingFees;
-
-            // Update the values on the page
-            document.getElementById("subtotal").innerText = subtotal.toFixed(2);
-            document.getElementById("tax").innerText = tax.toFixed(2);
-            if (cart.length > 0) {
-                document.getElementById("bookingFees").innerText = bookingFees.toFixed(2);
-            } else {
-                document.getElementById("bookingFees").innerText = "0.00";
-            }
-            document.getElementById("total").innerText = total.toFixed(2);
-        }
-
-        // 10. Product Reviews: Users can submit reviews and ra ngs for individual products. Display reviews on the product detail page. 
-        document.getElementById("reviewForm").addEventListener("submit", function (event) {
-            event.preventDefault();
-
-            // Capture the field values
-            const userName = document.getElementById("userName").value;
-            const reviewText = document.getElementById("reviews").value;
-            const starRating = document.getElementById("starRating").value;
-
-            // Add the new review
-            reviews.push(new Review(userName, reviewText, starRating));
-
-            // Display the reviews
-            displayReviews();
-
-            document.getElementById("reviewForm").reset();
-        });
-
-
-        // 12. View Product Details: Provide users a way to view more detailed informa on about a product (descrip on, reviews, ra ngs, etc.). 
-        reviews.push(new Review(1, "Chris", "Great trip to Paris!", 5));
-        reviews.push(new Review(2, "Jennifer", "Good tour, but could be better.", 4));
-        reviews.push(new Review(3, "Tom", "Not worth the money.", 2));
-        reviews.push(new Review(4, "Danielle", "My travel was amazing!", 5));
-
-        console.log(reviews);
-
-        function displayReviews() {
-
-            // Get the div element to display reviews list
-            var reviewList = document.getElementById("reviewList");
-            reviewList.innerHTML = "";
-
-            for (var i = 0; i < reviews.length; i++) {
-                var li = document.createElement("li");
-                li.innerHTML = '<h3>' + reviews[i].userName + '</h3>' +
-                    '<p>' + reviews[i].reviewText + '</p>' +
-                    '<p>' + reviews[i].starRating + ' &#127775;</p><br>';
-                reviewList.appendChild(li);
-            }
-
-        }
-        document.addEventListener('DOMContentLoaded', displayReviews);
-
-    </script>
-
+    <script src="./js/script.js"></script>
 </body>
 
 </html>
