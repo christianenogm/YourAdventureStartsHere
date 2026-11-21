@@ -1,5 +1,11 @@
 # Your Adventure Starts Here
 
+## Live Demo
+
+🌐 **View the website:** [Your Adventure Starts Here](https://christianenogm.github.io/YourAdventureStartsHere/)
+
+Recruiters can click the link above to open and explore the complete project directly in the browser.
+
 Travel booking website built with HTML, CSS, and JavaScript.
 
 ## Overview
